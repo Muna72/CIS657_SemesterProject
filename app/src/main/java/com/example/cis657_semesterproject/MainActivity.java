@@ -40,3 +40,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+
+/*public void sendFeedback(View button) {
+    // Do click handling here
+} */

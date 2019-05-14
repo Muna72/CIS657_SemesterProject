@@ -3,4 +3,15 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <string name="formTitle">Dog Breed Search</string>
+    <string name="sizeSelection">Select Breed Size</string>
+    <string name="allergiesResponse">Require Hypoallergenic</string>
+    <string name="submitButton">Submit Search</string>
+
+        <!--Other string resources also defined in this file… -->
+        <string name="feedbacktype1">Small</string>
+        <string name="feedbacktype2">Medium</string>
+        <string name="feedbacktype3">Large</string>
+
 </resources>
