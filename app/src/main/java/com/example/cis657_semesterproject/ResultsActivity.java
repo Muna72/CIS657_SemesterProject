@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -17,23 +15,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.Charset;
+import java.util.ArrayList;
 
 public class ResultsActivity extends AppCompatActivity {
 
 //android:autoLink="web"
 
     public static final int RESULTS_SELECTION = 1;
+    public static final int WEBPAGE_SELECTION = 1;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     String sizeSelection;
@@ -63,15 +58,18 @@ public class ResultsActivity extends AppCompatActivity {
         MyLocation myLocation = new MyLocation();
         myLocation.getLocation(this, locationResult);
 
-      /*  submitSearch.setOnClickListener(v-> {
+        Button petfinder = (Button) findViewById(R.id.petfinder);
 
-
-        }); */
+        petfinder.setOnClickListener(v-> {
+            Intent intent = new Intent(ResultsActivity.this, WebDisplayActivity.class);
+            startActivityForResult(intent,WEBPAGE_SELECTION);
+        });
     }
 
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
+        System.out.println("Hit activity func before if conditional");
 
         if(resultCode == RESULTS_SELECTION) {
              sizeSelection = (data.getStringExtra("sizeSelection"));
@@ -80,10 +78,12 @@ public class ResultsActivity extends AppCompatActivity {
              spaceSelection = (data.getStringExtra("spaceSelection"));
              timeSelection = (data.getStringExtra("timeSelection"));
              //hypoSelection = (data.getBooleanExtra("hypoSelection"));
+            System.out.println("hit inside activity result function");
             generateResults();
         }
     }
 
+    //TODO will return top ten breeds that best fit form data
     private void generateResults() {
 
         // Write a message to the database
@@ -91,13 +91,20 @@ public class ResultsActivity extends AppCompatActivity {
         myRef.setValue("Hello, World!");
 
         // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                System.out.println("Got into firebase function");
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 String value = dataSnapshot.getValue(String.class);
-                //Log.d(TAG, "Value is: " + value);
+                ArrayList<Object> breedsReturned = new ArrayList<Object>();
+                for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                    String num = datas.child("1").getValue().toString();
+                    System.out.println("NUM: " + num);
+
+
+                }
             }
 
             @Override

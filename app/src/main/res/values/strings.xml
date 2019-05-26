@@ -14,10 +14,10 @@
     <string name="allergiesResponse">Hypoallergenic Only</string>
     <string name="submitButton">Submit Search</string>
 
-        <!--Dog size options -->
-        <string name="feedbacktype1">Small</string>
-        <string name="feedbacktype2">Medium</string>
-        <string name="feedbacktype3">Large</string>
+    <!--Dog size options -->
+    <string name="feedbacktype1">Small</string>
+    <string name="feedbacktype2">Medium</string>
+    <string name="feedbacktype3">Large</string>
 
     <!--Dog size options -->
     <string name="underFiveHundred">Under $500</string>

@@ -38,16 +38,17 @@
                 android:id="@+id/testText"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginTop="148dp"
                 android:layout_marginEnd="25dp"
                 android:layout_marginRight="25dp"
-                android:layout_marginBottom="490dp"
+                android:layout_marginBottom="145dp"
                 android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/petfinder"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/testImage"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/testImage"
@@ -75,6 +76,18 @@
                 app:layout_constraintBottom_toTopOf="@+id/testImage"
                 app:layout_constraintStart_toStartOf="@+id/testImage"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/petfinder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginLeft="64dp"
+                android:layout_marginBottom="296dp"
+                android:text="Search Petfinder Now!"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/testText" />
 
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>
