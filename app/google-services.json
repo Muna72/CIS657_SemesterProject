@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "448164575358",
+    "firebase_url": "https://cis657semesterproject.firebaseio.com",
+    "project_id": "cis657semesterproject",
+    "storage_bucket": "cis657semesterproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:448164575358:android:0c26f96904519509",
+        "android_client_info": {
+          "package_name": "com.example.cis657_semesterproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "448164575358-tskbhddhkarsu0s1t67b4gg0p5068p31.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cis657_semesterproject",
+            "certificate_hash": "3c3ce668387635b3b8cd44ff18780b13b1ef9d82"
+          }
+        },
+        {
+          "client_id": "448164575358-cqne6t7nvvo0i9h8fp8pjdn7sihbrjbc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoWgnXVNF-0g5vgpp9OMe8Trn0bAurmP0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "448164575358-cqne6t7nvvo0i9h8fp8pjdn7sihbrjbc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

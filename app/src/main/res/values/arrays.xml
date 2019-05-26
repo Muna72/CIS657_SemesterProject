@@ -5,7 +5,32 @@
         <item>@string/feedbacktype1</item>
         <item>@string/feedbacktype2</item>
         <item>@string/feedbacktype3</item>
-        <item>@string/feedbacktype4</item>
+    </string-array>
+
+    <string-array name="timeSelectionList">
+        <item>@string/oneHour</item>
+        <item>@string/twoHours</item>
+        <item>@string/moreThanTwoHours</item>
+    </string-array>
+
+    <string-array name="priceSelectionList">
+        <item>@string/underFiveHundred</item>
+        <item>@string/fiveHundredToOneThousand</item>
+        <item>@string/OneToTwoThousand</item>
+        <item>@string/TwoToThreeThousand</item>
+        <item>@string/GreaterThanThreeThousand</item>
+    </string-array>
+
+    <string-array name="houseSelectionList">
+        <item>@string/appartment</item>
+        <item>@string/smallHome</item>
+        <item>@string/largeHome</item>
+    </string-array>
+
+    <string-array name="hairSelectionList">
+        <item>@string/shortHair</item>
+        <item>@string/mediumHair</item>
+        <item>@string/longHair</item>
     </string-array>
 
 </resources>

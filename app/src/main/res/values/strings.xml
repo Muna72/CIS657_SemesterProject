@@ -1,17 +1,46 @@
 <resources>
-    <string name="app_name">CIS657_SemesterProject</string>
-    <string name="title_home">Home</string>
+    <string name="app_name">Dog Search Application</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="sizePrompt">Select Preferred Dog Size</string>
+    <string name="newSearchButton">Start New Search</string>
 
     <string name="formTitle">Dog Breed Search</string>
     <string name="sizeSelection">Select Breed Size</string>
-    <string name="allergiesResponse">Require Hypoallergenic</string>
+    <string name="priceSelection"></string>
+    <string name="hairSelection"></string>
+    <string name="timeSelection"></string>
+    <string name="livingSpaceSelection"></string>
+    <string name="allergiesResponse">Hypoallergenic Only</string>
     <string name="submitButton">Submit Search</string>
 
-        <!--Other string resources also defined in this file… -->
+        <!--Dog size options -->
         <string name="feedbacktype1">Small</string>
         <string name="feedbacktype2">Medium</string>
         <string name="feedbacktype3">Large</string>
+
+    <!--Dog size options -->
+    <string name="underFiveHundred">Under $500</string>
+    <string name="fiveHundredToOneThousand">$500 - $1000</string>
+    <string name="OneToTwoThousand">$1000 - $2000</string>
+    <string name="TwoToThreeThousand">$2000 - $3000</string>
+    <string name="GreaterThanThreeThousand"> > $3000</string>
+
+    <!--Dog size options -->
+    <string name="appartment">Apartment/Condominium</string>
+    <string name="smallHome">Small House (under 1000 sq ft)</string>
+    <string name="largeHome">Large House (over 1000 sq ft)</string>
+
+    <!--Dog size options -->
+    <string name="shortHair">Short</string>
+    <string name="mediumHair">Medium</string>
+    <string name="longHair">Long</string>
+
+    <!--Dog size options -->
+    <string name="oneHour">Less than 1 hour</string>
+    <string name="twoHours">1-2 Hours</string>
+    <string name="moreThanTwoHours">2+ Hours</string>
+    <string name="title_activity_search">Search Form</string>
+    <string name="title_activity_results">Breed Results</string>
 
 </resources>
