@@ -2,12 +2,22 @@ package com.example.cis657_semesterproject;
 
 import android.content.Intent;
 import android.location.Location;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.cis657_semesterproject.dummy.ResultsContent;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,13 +32,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-public class ResultsActivity extends AppCompatActivity {
+public class ResultsActivity extends AppCompatActivity implements ResultsFragment.OnListFragmentInteractionListener{
 
 //android:autoLink="web"
 
-    public static final int RESULTS_SELECTION = 1;
+    public static final int ACCOUNT_SELECTION = 1;
     public static final int WEBPAGE_SELECTION = 1;
+    public static HashMap<String, ImageView> breedEntries = new HashMap<String, ImageView>();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     String sizeSelection;
@@ -43,10 +56,14 @@ public class ResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
-        //Button submitSearch = (Button) findViewById(R.id.submit);
-        String imageUri = "https://dog.ceo/api/breed/akita/images/random";
-        SendfeedbackJob job = new SendfeedbackJob();
-        job.execute(imageUri);
+        Intent intentFromSearchPage = getIntent();
+        sizeSelection = (intentFromSearchPage.getStringExtra("sizeSelection"));
+        priceSelection = (intentFromSearchPage.getStringExtra("priceSelection"));
+        hairSelection = (intentFromSearchPage.getStringExtra("hairSelection"));
+        spaceSelection = (intentFromSearchPage.getStringExtra("spaceSelection"));
+        timeSelection = (intentFromSearchPage.getStringExtra("timeSelection"));
+        //hypoSelection = (intentFromSearchPage.getBooleanExtra();
+        generateResults();
 
         MyLocation.LocationResult locationResult = new MyLocation.LocationResult(){
             @Override
@@ -66,45 +83,81 @@ public class ResultsActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
-        System.out.println("Hit activity func before if conditional");
-
-        if(resultCode == RESULTS_SELECTION) {
-             sizeSelection = (data.getStringExtra("sizeSelection"));
-             priceSelection = (data.getStringExtra("priceSelection"));
-             hairSelection = (data.getStringExtra("hairSelection"));
-             spaceSelection = (data.getStringExtra("spaceSelection"));
-             timeSelection = (data.getStringExtra("timeSelection"));
-             //hypoSelection = (data.getBooleanExtra("hypoSelection"));
-            System.out.println("hit inside activity result function");
-            generateResults();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_account) {
+            Intent intent = new Intent(ResultsActivity.this,
+                    AccountActivity.class);
+            startActivityForResult(intent, ACCOUNT_SELECTION);
+            return true;
         }
+        return false;
     }
 
-    //TODO will return top ten breeds that best fit form data
+    public void onListFragmentInteraction(ResultsContent.ResultsItem item) {
+        Intent intent = new Intent();
+        intent.putExtra("item", breedEntries);
+        //setResult(MainActivity.HISTORY_RESULT,intent);
+        finish();
+    }
+
+
     private void generateResults() {
 
         // Write a message to the database
-        DatabaseReference myRef = database.getReference("message");
-        myRef.setValue("Hello, World!");
+        DatabaseReference breedsRef = database.getReference("breeds");
+        //DatabaseReference breedsRef = rootRef.child("breeds");
+        //breedsRef.setValue("Hello, World!");
 
         // Read from the database
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        breedsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                System.out.println("Got into firebase function");
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                ArrayList<Object> breedsReturned = new ArrayList<Object>();
-                for (DataSnapshot datas : dataSnapshot.getChildren()) {
-                    String num = datas.child("1").getValue().toString();
-                    System.out.println("NUM: " + num);
+                //String value = dataSnapshot.getValue(String.class);
+                ArrayList<String> matchingBreedNames = new ArrayList<String>();
 
-
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                    String currentBreedName = (String) snap.child("name").getValue();
+                    String currentBreedSize = (String) snap.child("size").getValue();
+                    String currentBreedHair = (String) snap.child("hairType").getValue();
+                    int currentBreedPrice = (int) (long) snap.child("price").getValue();
+                    String currentBreedSpace = (String) snap.child("idealSpace").getValue();
+                    int currentBreedTime = (int) (long) snap.child("dailyTimeRequirement").getValue();
+                    //Boolean currentBreedHypo =
+                    System.out.println("IIIIIDDDDDDKKKKKK" + snap.child("size"));
+                    int matchingFeatures = 0;
+                    try {
+                        if (currentBreedSize.equalsIgnoreCase(sizeSelection)) {
+                            ++matchingFeatures;
+                        }
+                        if (currentBreedHair.equalsIgnoreCase(hairSelection)) {
+                            ++matchingFeatures;
+                        }
+                        if (currentBreedSpace.equalsIgnoreCase(spaceSelection)) {
+                            ++matchingFeatures;
+                        }
+                        if(currentBreedPrice <= Integer.valueOf(priceSelection.substring(1))) {
+                            ++matchingFeatures;
+                         }
+                        if(currentBreedTime <= Integer.valueOf(timeSelection.substring(1))) {
+                            ++matchingFeatures;
+                        }
+                        if( == hypoSelection) {
+                            ++matchingFeatures;
+                        }
+                        if(matchingFeatures == 6 && matchingBreedNames.size() < 10) {
+                            matchingBreedNames.add(currentBreedName);
+                        } else if (matchingFeatures == 5 && matchingBreedNames.size() < 10) {
+                            matchingBreedNames.add(currentBreedName);
+                        } else if (matchingFeatures == 4 && matchingBreedNames.size() < 10) {
+                            matchingBreedNames.add(currentBreedName);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+                displayBreedData(matchingBreedNames);
             }
 
             @Override
@@ -116,7 +169,19 @@ public class ResultsActivity extends AppCompatActivity {
 
     }
 
+    private void displayBreedData(ArrayList<String> breeds) {
+
+        for(int i = 0; i < breeds.size(); ++i) {
+            String imageUri = "https://dog.ceo/api/" + breeds.get(i) + "/images/random";
+            SendfeedbackJob job = new SendfeedbackJob();
+            job.execute(imageUri, breeds.get(i));
+        }
+        //TODO call fragment with hashmap data somehow?
+    }
+
     private class SendfeedbackJob extends AsyncTask<String, Void, String> {
+
+        private String breedName;
 
         @Override
         protected String doInBackground(String[] params) {
@@ -124,6 +189,7 @@ public class ResultsActivity extends AppCompatActivity {
 
             try {
                 String urlToRead = params[0];
+                this.breedName = params[1];
                 StringBuilder result = new StringBuilder();
                 URL url = new URL(urlToRead);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -150,13 +216,21 @@ public class ResultsActivity extends AppCompatActivity {
                 String jsonText = message;
                 System.out.println("Retrieved JSON text: " + jsonText);
                 JSONObject imageObject = new JSONObject(jsonText);
-                System.out.println("GOTHERE");
                 String url = imageObject.getString("message");
                 System.out.println("Image object: " + imageObject);
                 System.out.println("Image URL extracted: " + url);
-                ImageView testImage = (ImageView) findViewById(R.id.testImage);
+                ImageView imageView = new ImageView(getApplicationContext());
                 //Picasso.with(ResultsActivity.this).load(url).fit().centerCrop().into(testImage);
-                Picasso.with(ResultsActivity.this).load(url).into(testImage);
+                Picasso.with(ResultsActivity.this).load(url).into(imageView);
+
+                TextView textView = new TextView(getApplicationContext());
+                textView.setClickable(true);
+                textView.setMovementMethod(LinkMovementMethod.getInstance());
+                String text = "<a href='https://www.google.com/search?q=" + this.breedName + "'> " + this.breedName + " </a>";
+                textView.setText(Html.fromHtml(text));
+
+                breedEntries.put(this.breedName, imageView);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

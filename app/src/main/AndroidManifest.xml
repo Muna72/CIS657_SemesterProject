@@ -7,12 +7,16 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/appiconscore"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".WebDisplayActivity"></activity>
+        <activity android:name=".ResultsHistoryActivity"></activity>
+        <activity android:name=".AccountActivity" />
+        <activity android:name=".ViewHistoryActivity" />
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".WebDisplayActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">

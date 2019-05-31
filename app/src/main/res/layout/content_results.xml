@@ -20,76 +20,29 @@
             android:orientation="vertical" />
     </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
+    <Button
+        android:id="@+id/petfinder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="Search Petfinder Now!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.055" />
+
+    <fragment
+        android:id="@+id/fragment"
+        android:name="com.example.cis657_semesterproject.ResultsFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
+        android:layout_marginTop="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <EditText
-                android:id="@+id/testText"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="148dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginBottom="145dp"
-                android:ems="10"
-                android:gravity="start|top"
-                android:inputType="textMultiLine"
-                app:layout_constraintBottom_toTopOf="@+id/petfinder"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/testImage"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/testImage"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="29dp"
-                android:layout_marginLeft="29dp"
-                android:layout_marginEnd="13dp"
-                android:layout_marginRight="13dp"
-                android:layout_marginBottom="478dp"
-                android:src="@mipmap/ic_launcher"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/testText"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="276dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="60dp"
-                android:layout_marginBottom="18dp"
-                android:text="Search Results"
-                android:textSize="30dp"
-                app:layout_constraintBottom_toTopOf="@+id/testImage"
-                app:layout_constraintStart_toStartOf="@+id/testImage"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/petfinder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="64dp"
-                android:layout_marginLeft="64dp"
-                android:layout_marginBottom="296dp"
-                android:text="Search Petfinder Now!"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/testText" />
-
-        </android.support.constraint.ConstraintLayout>
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
 </android.support.constraint.ConstraintLayout>

@@ -37,6 +37,12 @@
                 android:textSize="10pt"
                 app:fontFamily="casual"></TextView>
 
+            <TextView
+                android:id="@+id/sizeLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Preferred Dog Size" />
+
             <Spinner
                 android:id="@+id/sizeSpinner"
                 android:layout_width="wrap_content"
@@ -47,6 +53,12 @@
                 android:layout_marginBottom="7dp"
                 android:prompt="@string/sizePrompt"></Spinner>
 
+            <TextView
+                android:id="@+id/hairLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Preferred Hair Length" />
+
             <Spinner
                 android:id="@+id/hairSpinner"
                 android:layout_width="wrap_content"
@@ -55,6 +67,12 @@
                 android:entries="@array/hairSelectionList"
                 android:prompt="@string/livingSpaceSelection">
             </Spinner>
+
+            <TextView
+                android:id="@+id/priceLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Maximum Purchase Price" />
 
             <Spinner
                 android:id="@+id/priceSpinner"
@@ -66,6 +84,12 @@
                 android:layout_marginBottom="7dp"
                 android:prompt="@string/priceSelection"></Spinner>
 
+            <TextView
+                android:id="@+id/spaceLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Please Select Your Current Living Space:" />
+
             <Spinner
                 android:id="@+id/houseSpinner"
                 android:layout_width="fill_parent"
@@ -74,6 +98,12 @@
                 android:entries="@array/houseSelectionList"
                 android:prompt="@string/hairSelection"></Spinner>
 
+            <TextView
+                android:id="@+id/timeLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Please Select Daily Time Available:" />
+
             <Spinner
                 android:id="@+id/timeSpinner"
                 android:layout_width="fill_parent"
@@ -81,6 +111,12 @@
                 android:layout_marginBottom="7dp"
                 android:entries="@array/timeSelectionList"
                 android:prompt="@string/timeSelection"></Spinner>
+
+            <TextView
+                android:id="@+id/allergyLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Allergy Preference:" />
 
             <CheckBox
                 android:id="@+id/hypoCheck"

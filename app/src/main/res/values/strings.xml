@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Dog Search Application</string>
+    <string name="app_name">Fido Finder</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="sizePrompt">Select Preferred Dog Size</string>
@@ -20,11 +20,11 @@
     <string name="feedbacktype3">Large</string>
 
     <!--Dog size options -->
-    <string name="underFiveHundred">Under $500</string>
-    <string name="fiveHundredToOneThousand">$500 - $1000</string>
-    <string name="OneToTwoThousand">$1000 - $2000</string>
-    <string name="TwoToThreeThousand">$2000 - $3000</string>
-    <string name="GreaterThanThreeThousand"> > $3000</string>
+    <string name="underFiveHundred">$500</string>
+    <string name="fiveHundredToOneThousand">$1000</string>
+    <string name="OneToTwoThousand">$2000</string>
+    <string name="TwoToThreeThousand">$3000</string>
+    <string name="GreaterThanThreeThousand">$5000</string>
 
     <!--Dog size options -->
     <string name="appartment">Apartment/Condominium</string>
