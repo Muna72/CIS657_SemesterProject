@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.cis657_semesterproject.dummy.ResultsContent;
-import com.example.cis657_semesterproject.dummy.ResultsContent.ResultsItem;
 
 /**
  * A fragment representing a list of Items.
@@ -26,6 +24,8 @@ public class ResultsFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    public static ResultsRecyclerViewAdapter myAdapter;
+    public static RecyclerView myRecycler;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -47,7 +47,7 @@ public class ResultsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        System.out.println("HERE 111");
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -60,23 +60,26 @@ public class ResultsFragment extends Fragment {
 
         // Set the adapter
         if (view instanceof RecyclerView) {
+            System.out.println("HERE 222");
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            myRecycler = (RecyclerView) view;
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                myRecycler.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                myRecycler.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new ResultsRecyclerViewAdapter(ResultsContent.ITEMS, mListener));
+            myAdapter = new ResultsRecyclerViewAdapter(ResultsActivity.breedEntries, mListener);
+            myRecycler.setAdapter(myAdapter);
         }
         return view;
     }
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        System.out.println("HERE 333");
         if (context instanceof OnListFragmentInteractionListener) {
+            System.out.println("WOWIEEEE");
             mListener = (OnListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
@@ -102,6 +105,6 @@ public class ResultsFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(ResultsItem item);
+        void onListFragmentInteraction(ResultsActivity.ResultsItem item);
     }
 }

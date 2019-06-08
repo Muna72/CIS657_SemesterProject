@@ -37,9 +37,9 @@
     <string name="longHair">Long</string>
 
     <!--Dog size options -->
-    <string name="oneHour">Less than 1 hour</string>
-    <string name="twoHours">1-2 Hours</string>
-    <string name="moreThanTwoHours">2+ Hours</string>
+    <string name="oneHour">1 Hour</string>
+    <string name="twoHours">2 Hours</string>
+    <string name="moreThanTwoHours">3+ Hours</string>
     <string name="title_activity_search">Search Form</string>
     <string name="title_activity_results">Breed Results</string>
 

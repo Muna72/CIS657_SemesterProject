@@ -3,10 +3,19 @@ package com.example.cis657_semesterproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import static com.example.cis657_semesterproject.ResultsActivity.ACCOUNT_SELECTION;
+import static com.example.cis657_semesterproject.SignupActivity.validated;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -59,6 +68,33 @@ public class SearchActivity extends AppCompatActivity {
             intent.putExtra("hypoSelection", hypoSelection);
             startActivityForResult(intent,RESULTS_SELECTION);
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_menu, menu); //your file name
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(item.getItemId() == R.id.action_account) {
+            if(user != null) {
+                Intent intent = new Intent(SearchActivity.this,
+                        AccountActivity.class);
+                startActivityForResult(intent, ACCOUNT_SELECTION);
+                return true;
+            } else {
+                Intent intent = new Intent(SearchActivity.this,
+                        SignupActivity.class);
+                startActivityForResult(intent, ACCOUNT_SELECTION);
+                return true;
+            }
+        }
+        return false;
     }
 
 }
