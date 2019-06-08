@@ -6,4 +6,8 @@
         android:id="@+id/action_account"
         app:showAsAction="never" />
 
+    <item android:title="Home"
+        android:id="@+id/action_home"
+        app:showAsAction="never" />
+
 </menu>

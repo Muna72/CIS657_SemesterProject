@@ -60,6 +60,7 @@ public class ResultsActivity extends AppCompatActivity implements ResultsFragmen
 
     public static final int ACCOUNT_SELECTION = 1;
     public static final int WEBPAGE_SELECTION = 1;
+    public static final int MAIN_SELECTION = 1;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     public static List<ResultsItem> breedEntries = new ArrayList<ResultsItem>();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -68,8 +69,6 @@ public class ResultsActivity extends AppCompatActivity implements ResultsFragmen
 
     Double latitude;
     Double longitude;
-    String country;
-    String city;
     String state;
     String zip;
     String sizeSelection;
@@ -251,6 +250,11 @@ public class ResultsActivity extends AppCompatActivity implements ResultsFragmen
                 startActivityForResult(intent, ACCOUNT_SELECTION);
                 return true;
             }
+        }
+        if(item.getItemId() == R.id.action_home) {
+            Intent intent = new Intent(ResultsActivity.this,
+                    MainActivity.class);
+            startActivityForResult(intent, MAIN_SELECTION);
         }
         return false;
     }

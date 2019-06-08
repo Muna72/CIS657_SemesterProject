@@ -9,15 +9,28 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONObject;
+import org.joda.time.*;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.example.cis657_semesterproject.ResultsActivity.ACCOUNT_SELECTION;
-import static com.example.cis657_semesterproject.SignupActivity.validated;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity implements Serializable {
 
 
     Spinner sizeSpinner;
@@ -28,14 +41,19 @@ public class SearchActivity extends AppCompatActivity {
     CheckBox hypoBox;
     Button submitSearch;
 
-    String sizeSelection;
-    String priceSelection;
-    String timeSelection;
-    boolean hypoSelection;
-    String spaceSelection;
-    String hairSelection;
+    public String sizeSelection;
+    public String priceSelection;
+    public String timeSelection;
+    public boolean hypoSelection;
+    public String spaceSelection;
+    public String hairSelection;
 
+    public JSONObject item;
+    public Map<String, Object> currentHistory;
     public static final int RESULTS_SELECTION = 1;
+    public static final int MAIN_SELECTION = 1;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +77,8 @@ public class SearchActivity extends AppCompatActivity {
             timeSelection = timeSpinner.getSelectedItem().toString();
             hypoSelection = hypoBox.hasSelection();
 
+            updateUserSearchHistory();
+
             Intent intent = new Intent(SearchActivity.this,ResultsActivity.class);
             intent.putExtra("sizeSelection", sizeSelection);
             intent.putExtra("hairSelection", hairSelection);
@@ -68,6 +88,68 @@ public class SearchActivity extends AppCompatActivity {
             intent.putExtra("hypoSelection", hypoSelection);
             startActivityForResult(intent,RESULTS_SELECTION);
         });
+    }
+
+    public void updateUserSearchHistory() {
+
+        if(user != null) {
+System.out.println("USER SIGN IN ON SEARCH PAGE: " + user);
+            DatabaseReference usersRef = database.getReference("users");
+
+            usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    //String value = dataSnapshot.getValue(String.class);
+
+                    for (DataSnapshot snap : dataSnapshot.getChildren()) {
+
+                        String currentEmail = (String) snap.child("email").getValue();
+                        //JSONArray currentHistory = (JSONArray) snap.child("savedSearches").getValue();
+                        ArrayList<Object> currentItems = (ArrayList<Object>) snap.child("savedSearches").getValue();
+                        currentHistory = new HashMap<>();
+                        System.out.println("CURRENT ITEMS: " + currentItems);
+                        try {
+                            if (currentEmail.equals(user.getEmail())) {
+
+                                for (int i = 0; i < currentItems.size(); ++i) {
+                                    currentHistory.put(String.valueOf(i), currentItems.get(i));
+                                }
+
+                                DatabaseReference currentUserRef = snap.getRef();
+                                item = new JSONObject();
+                                item.put("price", priceSelection);
+                                item.put("size", sizeSelection);
+                                item.put("hairType", hairSelection);
+                                item.put("dailyTimeRequirement", timeSelection);
+                                item.put("hypoallergenic", hypoSelection);
+                                item.put("idealSpace", spaceSelection);
+                                item.put("date", LocalDate.now());
+                                String jsonString = item.toString();
+                                Map<String, Object> jsonMap = new Gson().fromJson(jsonString, new TypeToken<HashMap<String, Object>>() {}.getType());
+                                currentHistory.put(String.valueOf(currentItems.size()), jsonMap);
+                                System.out.println("CURRENT HISTORY: " + currentHistory);
+                                System.out.println("CURRENT REF: " +  currentUserRef.child("savedSearches") );
+                                currentUserRef.child("savedSearches").setValue(currentHistory);
+                                //String key = currentUserRef.child("savedSearches").push().getKey();
+                                //currentUserRef.child("savedSearches").child(key).setValue(currentHistory);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    // Log.w(TAG, "Failed to read value.", error.toException());
+                }
+            });
+
+        }
+
     }
 
     @Override
@@ -93,6 +175,11 @@ public class SearchActivity extends AppCompatActivity {
                 startActivityForResult(intent, ACCOUNT_SELECTION);
                 return true;
             }
+        }
+        if(item.getItemId() == R.id.action_home) {
+            Intent intent = new Intent(SearchActivity.this,
+                    MainActivity.class);
+            startActivityForResult(intent, MAIN_SELECTION);
         }
         return false;
     }

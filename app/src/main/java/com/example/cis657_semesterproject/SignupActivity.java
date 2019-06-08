@@ -41,7 +41,7 @@ public class SignupActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     public static final int ACCOUNT_SELECTION = 1;
-    //todo to sign out: FirebaseAuth.getInstance().signOut();
+    public static final int MAIN_SELECTION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -20,6 +20,7 @@ import static com.example.cis657_semesterproject.SignupActivity.validated;
 
 public class WebDisplayActivity extends AppCompatActivity {
 
+    public static final int MAIN_SELECTION = 1;
     private WebView webview;
     Map<String, String> states = new HashMap<String, String>();
 
@@ -71,6 +72,11 @@ public class WebDisplayActivity extends AppCompatActivity {
                 startActivityForResult(intent, ACCOUNT_SELECTION);
                 return true;
             }
+        }
+        if(item.getItemId() == R.id.action_home) {
+            Intent intent = new Intent(WebDisplayActivity.this,
+                    MainActivity.class);
+            startActivityForResult(intent, MAIN_SELECTION);
         }
         return false;
     }

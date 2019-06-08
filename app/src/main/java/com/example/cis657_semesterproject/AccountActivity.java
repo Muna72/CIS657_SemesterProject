@@ -35,10 +35,12 @@ public class AccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+        System.out.println("CURRENT USER: " + user);
 
         acctHeader = (TextView) findViewById(R.id.accountheader);
         viewHistory = (Button) findViewById(R.id.viewSavedSearches);
         signOut = (Button) findViewById(R.id.signOut);
+        acctHeader.setText( user.getEmail()+ "'s Account Page");
 
         viewHistory.setOnClickListener(v-> {
             FirebaseAuth.getInstance().signOut();
@@ -50,6 +52,7 @@ public class AccountActivity extends AppCompatActivity {
             Intent intent = new Intent(AccountActivity.this, MainActivity.class);
             startActivityForResult(intent,MAIN_SELECTION);
         });
+
     }
 
     @Override
@@ -67,12 +70,12 @@ public class AccountActivity extends AppCompatActivity {
                         AccountActivity.class);
                 startActivityForResult(intent, ACCOUNT_SELECTION);
                 return true;
-            } else {
-                Intent intent = new Intent(AccountActivity.this,
-                        SignupActivity.class);
-                startActivityForResult(intent, ACCOUNT_SELECTION);
-                return true;
             }
+        }
+        if(item.getItemId() == R.id.action_home) {
+            Intent intent = new Intent(AccountActivity.this,
+                    MainActivity.class);
+            startActivityForResult(intent, MAIN_SELECTION);
         }
         return false;
     }
