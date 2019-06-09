@@ -14,7 +14,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import static com.example.cis657_semesterproject.ResultsActivity.ACCOUNT_SELECTION;
-import static com.example.cis657_semesterproject.SignupActivity.validated;
 
 public class MainActivity extends AppCompatActivity {
 

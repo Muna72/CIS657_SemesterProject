@@ -53,8 +53,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static com.example.cis657_semesterproject.SignupActivity.validated;
-
 public class ResultsActivity extends AppCompatActivity implements ResultsFragment.OnListFragmentInteractionListener{
 
     public static final int ACCOUNT_SELECTION = 1;

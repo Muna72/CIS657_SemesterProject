@@ -38,8 +38,10 @@ public class ResultsRecyclerViewAdapter extends RecyclerView.Adapter<ResultsRecy
 
         holder.mP1.setClickable(true);
         holder.mP1.setText(Html.fromHtml(text));
+        holder.mP1.setTextSize(15);
         System.out.println("WEB ADDRESS: " + text);
         Linkify.addLinks(holder.mP1, Linkify.ALL);
+        //TODO links not working
 
         holder.breedImage.setImageDrawable(mValues.get(position).breedImage.getDrawable());
 

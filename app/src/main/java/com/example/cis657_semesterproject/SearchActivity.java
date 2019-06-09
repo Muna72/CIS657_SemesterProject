@@ -75,7 +75,7 @@ public class SearchActivity extends AppCompatActivity implements Serializable {
             priceSelection = priceSpinner.getSelectedItem().toString();
             spaceSelection = spaceSpinner.getSelectedItem().toString();
             timeSelection = timeSpinner.getSelectedItem().toString();
-            hypoSelection = hypoBox.hasSelection();
+            hypoSelection = hypoBox.isChecked();
 
             updateUserSearchHistory();
 
@@ -106,8 +106,13 @@ System.out.println("USER SIGN IN ON SEARCH PAGE: " + user);
                     for (DataSnapshot snap : dataSnapshot.getChildren()) {
 
                         String currentEmail = (String) snap.child("email").getValue();
+                        ArrayList<Object> currentItems;
                         //JSONArray currentHistory = (JSONArray) snap.child("savedSearches").getValue();
-                        ArrayList<Object> currentItems = (ArrayList<Object>) snap.child("savedSearches").getValue();
+                        if("".equals(snap.child("savedSearches").getValue())) {
+                            currentItems = new ArrayList<>();
+                        } else {
+                            currentItems = (ArrayList<Object>) snap.child("savedSearches").getValue();
+                        }
                         currentHistory = new HashMap<>();
                         System.out.println("CURRENT ITEMS: " + currentItems);
                         try {
@@ -123,6 +128,7 @@ System.out.println("USER SIGN IN ON SEARCH PAGE: " + user);
                                 item.put("size", sizeSelection);
                                 item.put("hairType", hairSelection);
                                 item.put("dailyTimeRequirement", timeSelection);
+                                System.out.println("HYPO SELECTION: " + hypoSelection);
                                 item.put("hypoallergenic", hypoSelection);
                                 item.put("idealSpace", spaceSelection);
                                 item.put("date", LocalDate.now());

@@ -122,7 +122,6 @@ public class ViewHistoryActivity extends AppCompatActivity {
 
         if(savedSearches != null) {
 
-            System.out.println("SIZE AND KEYSEET: " + savedSearches.keySet() + " " + savedSearches.keySet().size());
             for (int i = 0; i < savedSearches.keySet().size(); ++i) {
                  TextView temp = new TextView(this);
                  temp.setClickable(true);
@@ -154,7 +153,6 @@ public class ViewHistoryActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                  layout.addView(temp);
-                System.out.println("ENTRY ADDED");
             }
             layout.invalidate();
             layout.requestLayout();

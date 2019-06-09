@@ -40,7 +40,7 @@ public class AccountActivity extends AppCompatActivity {
         acctHeader = (TextView) findViewById(R.id.accountheader);
         viewHistory = (Button) findViewById(R.id.viewSavedSearches);
         signOut = (Button) findViewById(R.id.signOut);
-        acctHeader.setText( user.getEmail()+ "'s Account Page");
+        acctHeader.setText("Account Page\n" +  user.getEmail());
 
         viewHistory.setOnClickListener(v-> {
             Intent intent = new Intent(AccountActivity.this, ViewHistoryActivity.class);

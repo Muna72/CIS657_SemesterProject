@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.cis657_semesterproject.ResultsActivity.ACCOUNT_SELECTION;
-import static com.example.cis657_semesterproject.SignupActivity.validated;
 
 public class WebDisplayActivity extends AppCompatActivity {
 

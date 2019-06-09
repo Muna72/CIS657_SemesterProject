@@ -1,6 +1,9 @@
 package com.example.cis657_semesterproject;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,8 +25,21 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.joda.time.LocalDate;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,7 +55,8 @@ public class SignupActivity extends AppCompatActivity {
     String emailContent;
     String passwordContent;
     boolean signUp;
-    public static boolean validated;
+    public JSONObject item;
+    public Map<String, Object> newEntry;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -55,6 +72,7 @@ public class SignupActivity extends AppCompatActivity {
         warning = (TextView) findViewById(R.id.warning);
         confirmLabel = (TextView) findViewById(R.id.confirmLabel);
         warning.setVisibility(View.INVISIBLE);
+        warning.setTextColor(Color.RED);
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         confirmPassword = (EditText) findViewById(R.id.confirmPassword);
@@ -65,88 +83,122 @@ public class SignupActivity extends AppCompatActivity {
 
         accountAction.setOnClickListener(v-> {
 
-            System.out.println("INSIDE LISTENER");
-            boolean validEntry = validateInputs();
             warning.setVisibility(View.INVISIBLE);
 
+            if (!email.getText().toString().isEmpty() && !password.getText().toString().isEmpty()) {
+
+                boolean validEntry = validateInputs();
+
             if(validEntry) {
-                System.out.println("INSIDE VALID");
-                emailContent = (String.valueOf(email.getText()));
-                passwordContent = (String.valueOf(password.getText()));
+                    emailContent = (String.valueOf(email.getText()));
+                    passwordContent = (String.valueOf(password.getText()));
 
-                if (signUp) {
-                    System.out.println("INSIDE SIGNUP");
+                    if (signUp) {
+                        System.out.println("INSIDE SIGNUP");
 
-                    mAuth.createUserWithEmailAndPassword(emailContent, passwordContent)
-                            .addOnCompleteListener(
-                                    new OnCompleteListener<AuthResult>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<AuthResult> task) {
-                                            if (!task.isSuccessful())
-                                            {
-                                                try {
-                                                    throw task.getException();
+                        mAuth.createUserWithEmailAndPassword(emailContent, passwordContent)
+                                .addOnCompleteListener(
+                                        new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if (!task.isSuccessful()) {
+                                                    try {
+                                                        throw task.getException();
+                                                    }
+                                                    // if user enters wrong email.
+                                                    catch (FirebaseAuthWeakPasswordException weakPassword) {
+                                                        warning.setText("ERROR: weak_password");
+
+                                                        // TODO: take your actions!
+                                                    }
+                                                    // if user enters wrong password.
+                                                    catch (FirebaseAuthInvalidCredentialsException malformedEmail) {
+                                                        warning.setText("ERROR: malformed_email");
+
+                                                        // TODO: Take your action
+                                                    } catch (FirebaseAuthUserCollisionException existEmail) {
+                                                        warning.setText("ERROR: exist_email");
+
+                                                        // TODO: Take your action
+                                                    } catch (Exception e) {
+                                                        warning.setText("ERROR: " + e.getMessage());
+                                                    }
+                                                    warning.setVisibility(View.VISIBLE);
+                                                } else {
+                                                    //create database entry
+                                                    final DatabaseReference usersRef = database.getReference("users");
+                                                    // Read from the database
+                                                    usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                                            // This method is called once with the initial value and again
+                                                            // whenever data at this location is updated.
+                                                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                                            item = new JSONObject();
+                                                            try {
+                                                                item.put("email", user.getEmail());
+                                                                item.put("savedSearches","");
+                                                                newEntry = new HashMap<>();
+                                                                String jsonString = item.toString();
+                                                                Map<String, Object> jsonMap = new Gson().fromJson(jsonString, new TypeToken<HashMap<String, Object>>() {}.getType());
+                                                                DatabaseReference newEntryRef = usersRef.child(String.valueOf(dataSnapshot.getChildrenCount()));
+                                                                newEntryRef.setValue(jsonMap);
+                                                            } catch (Exception e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(DatabaseError error) {
+                                                            // Failed to read value
+                                                            // Log.w(TAG, "Failed to read value.", error.toException());
+                                                        }
+                                                    });
+
+                                                    Intent i = new Intent(SignupActivity.this, AccountActivity.class);
+                                                    startActivityForResult(i, ACCOUNT_SELECTION);
                                                 }
-                                                // if user enters wrong email.
-                                                catch (FirebaseAuthWeakPasswordException weakPassword) {
-                                                    warning.setText("onComplete: weak_password");
-
-                                                    // TODO: take your actions!
-                                                }
-                                                // if user enters wrong password.
-                                                catch (FirebaseAuthInvalidCredentialsException malformedEmail) {
-                                                    warning.setText("onComplete: malformed_email");
-
-                                                    // TODO: Take your action
-                                                } catch (FirebaseAuthUserCollisionException existEmail) {
-                                                    warning.setText("onComplete: exist_email");
-
-                                                    // TODO: Take your action
-                                                } catch (Exception e) {
-                                                    warning.setText("onComplete: " + e.getMessage());
-                                                }
-                                                warning.setVisibility(View.VISIBLE);
-                                            } else {
-                                                Intent i = new Intent(SignupActivity.this, AccountActivity.class);
-                                                startActivityForResult(i, ACCOUNT_SELECTION);
                                             }
                                         }
-                                    }
-                            );
-                } else {
-                    System.out.println("INSIDE SIGNIN");
-                    mAuth.signInWithEmailAndPassword(emailContent, passwordContent)
-                            .addOnCompleteListener(
-                                    new OnCompleteListener<AuthResult>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<AuthResult> task) {
-                                            if (!task.isSuccessful()) {
-                                                try {
-                                                    throw task.getException();
-                                                }
-                                                // if user enters wrong email.
-                                                catch (FirebaseAuthInvalidUserException invalidEmail) {
-                                                    warning.setText("onComplete: invalid_email");
+                                );
+                    } else {
+                        System.out.println("INSIDE SIGNIN");
+                        mAuth.signInWithEmailAndPassword(emailContent, passwordContent)
+                                .addOnCompleteListener(
+                                        new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if (!task.isSuccessful()) {
+                                                    try {
+                                                        throw task.getException();
+                                                    }
+                                                    // if user enters wrong email.
+                                                    catch (FirebaseAuthInvalidUserException invalidEmail) {
+                                                        warning.setText("ERROR: invalid_email");
 
-                                                    // TODO: take your actions!
-                                                }
-                                                // if user enters wrong password.
-                                                catch (FirebaseAuthInvalidCredentialsException wrongPassword) {
-                                                    warning.setText("onComplete: wrong_password");
+                                                        // TODO: take your actions!
+                                                    }
+                                                    // if user enters wrong password.
+                                                    catch (FirebaseAuthInvalidCredentialsException wrongPassword) {
+                                                        warning.setText("ERROR: wrong_password");
 
-                                                    // TODO: Take your action
-                                                } catch (Exception e) {
-                                                    warning.setText("onComplete: " + e.getMessage());
+                                                        // TODO: Take your action
+                                                    } catch (Exception e) {
+                                                        warning.setText("ERROR: " + e.getMessage());
+                                                    }
+                                                    warning.setVisibility(View.VISIBLE);
+                                                } else {
+                                                    Intent i = new Intent(SignupActivity.this, AccountActivity.class);
+                                                    startActivityForResult(i, ACCOUNT_SELECTION);
                                                 }
-                                                warning.setVisibility(View.VISIBLE);
-                                            } else {
-                                                Intent i = new Intent(SignupActivity.this, AccountActivity.class);
-                                                startActivityForResult(i, ACCOUNT_SELECTION);
                                             }
                                         }
-                                    }
-                            );
-                }
+                                );
+                    }
+            }
+            } else {
+                warning.setText("All fields must be filled out");
+                warning.setVisibility(View.VISIBLE);
             }
         });
 
