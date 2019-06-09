@@ -17,13 +17,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="Home Page">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#00B4FF"
-            app:popupTheme="@style/AppTheme" />
-
     </android.support.design.widget.AppBarLayout>
 
     <include

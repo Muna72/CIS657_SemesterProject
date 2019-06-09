@@ -8,16 +8,26 @@
     <fragment
         android:id="@+id/fragment"
         android:name="com.example.cis657_semesterproject.ResultsFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="parent" />
 
+    <TextView
+        android:id="@+id/resultsHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search Results"
+        android:textSize="10pt"
+        app:fontFamily="casual"
+        tools:layout_editor_absoluteX="3dp"
+        tools:layout_editor_absoluteY="49dp" />
+
     <Button
         android:id="@+id/petfinder"
+        app:fontFamily="casual"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"

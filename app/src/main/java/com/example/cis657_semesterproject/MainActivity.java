@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(item.getItemId() == R.id.action_account) {
             if(user != null) {
+                System.out.println("USER IS: " + user);
                 Intent intent = new Intent(MainActivity.this,
                         AccountActivity.class);
                 startActivityForResult(intent, ACCOUNT_SELECTION);
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Intent intent = new Intent(MainActivity.this,
                         SignupActivity.class);
+                intent.putExtra("isSignUp", false);
                 startActivityForResult(intent, ACCOUNT_SELECTION);
                 return true;
             }

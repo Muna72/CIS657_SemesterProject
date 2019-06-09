@@ -43,12 +43,12 @@ public class AccountActivity extends AppCompatActivity {
         acctHeader.setText( user.getEmail()+ "'s Account Page");
 
         viewHistory.setOnClickListener(v-> {
-            FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(AccountActivity.this, ViewHistoryActivity.class);
             startActivityForResult(intent,HISTORY_SELECTION);
         });
 
         signOut.setOnClickListener(v-> {
+            FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(AccountActivity.this, MainActivity.class);
             startActivityForResult(intent,MAIN_SELECTION);
         });

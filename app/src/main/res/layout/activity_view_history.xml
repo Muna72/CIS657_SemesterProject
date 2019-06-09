@@ -6,4 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".ViewHistoryActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
+        android:background="#0082FF"
+        android:theme="@style/AppTheme"
+        app:layout_constraintBottom_toTopOf="@+id/historyHeader"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Home Page">
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_view_history" />
+
 </android.support.constraint.ConstraintLayout>

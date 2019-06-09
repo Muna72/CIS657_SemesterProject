@@ -5,6 +5,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -184,5 +187,37 @@ public class SignupActivity extends AppCompatActivity {
             }
         }
         return valid;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.top_menu, menu); //your file name
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(item.getItemId() == R.id.action_account) {
+            if(user != null) {
+                Intent intent = new Intent(SignupActivity.this,
+                        AccountActivity.class);
+                startActivityForResult(intent, ACCOUNT_SELECTION);
+                return true;
+            } else {
+                Intent intent = new Intent(SignupActivity.this,
+                        SignupActivity.class);
+                startActivityForResult(intent, ACCOUNT_SELECTION);
+                return true;
+            }
+        }
+        if(item.getItemId() == R.id.action_home) {
+            Intent intent = new Intent(SignupActivity.this,
+                    MainActivity.class);
+            startActivityForResult(intent, MAIN_SELECTION);
+        }
+        return false;
     }
 }

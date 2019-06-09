@@ -10,35 +10,28 @@
         android:id="@+id/appBarLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:background="#0082FF"
         android:theme="@style/AppTheme"
-        app:layout_constraintBottom_toTopOf="@+id/accountheader"
+        app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="Home Page">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#00B4FF"
-            app:popupTheme="@style/AppTheme" />
-
     </android.support.design.widget.AppBarLayout>
 
     <TextView
         android:id="@+id/accountheader"
-        android:layout_width="229dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="59dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="29dp"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="56dp"
+        android:textSize="35sp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/viewSavedSearches"
+        app:fontFamily="casual"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/viewSavedSearches"
@@ -46,21 +39,34 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginBottom="475dp"
+        android:layout_marginTop="227dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
         android:text="View Saved Searches"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="25sp"
+        app:fontFamily="casual"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accountheader" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/signOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
-        android:layout_marginLeft="92dp"
+        android:layout_marginBottom="35dp"
+        android:background="@drawable/otherbuttons"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
         android:text="Sign Out"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:fontFamily="casual"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

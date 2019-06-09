@@ -19,17 +19,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="Home Page">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#00B4FF"
-            app:popupTheme="@style/AppTheme" />
-
     </android.support.design.widget.AppBarLayout>
 
     <Button
         android:id="@+id/startNewSearch"
+        app:fontFamily="casual"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -37,7 +31,14 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:textSize="25sp"
         android:text="@string/newSearchButton"
+        android:textColor="#000000"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,34 +49,57 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="389dp"
+        android:layout_height="173dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         app:srcCompat="@drawable/logo" />
 
     <Button
         android:id="@+id/signIn"
+        app:fontFamily="casual"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/otherbuttons"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:textSize="15sp"
         android:text="Sign In"
         app:layout_constraintBottom_toTopOf="@+id/signUp"
         app:layout_constraintStart_toStartOf="@+id/signUp" />
 
     <Button
+        android:textSize="15sp"
+        app:fontFamily="casual"
+        android:textStyle="bold"
+        android:background="@drawable/otherbuttons"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
         android:id="@+id/signUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="140dp"
+        android:layout_marginBottom="44dp"
         android:text="Sign Up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Teh"
+        tools:layout_editor_absoluteX="140dp"
+        tools:layout_editor_absoluteY="208dp" />
 
 </android.support.constraint.ConstraintLayout>
