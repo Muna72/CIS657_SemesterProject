@@ -23,7 +23,6 @@
 
     <Button
         android:id="@+id/startNewSearch"
-        app:fontFamily="casual"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -36,16 +35,17 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:textSize="25sp"
         android:text="@string/newSearchButton"
         android:textColor="#000000"
+        android:textSize="25sp"
         android:visibility="visible"
+        app:fontFamily="casual"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_bias="0.491"></Button>
+        app:layout_constraintVertical_bias="0.552"></Button>
 
     <ImageView
         android:id="@+id/imageView2"
@@ -53,15 +53,12 @@
         android:layout_height="173dp"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
-        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         app:srcCompat="@drawable/logo" />
 
     <Button
         android:id="@+id/signIn"
-        app:fontFamily="casual"
-        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -70,36 +67,41 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:textSize="15sp"
         android:text="Sign In"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:fontFamily="casual"
         app:layout_constraintBottom_toTopOf="@+id/signUp"
         app:layout_constraintStart_toStartOf="@+id/signUp" />
 
     <Button
-        android:textSize="15sp"
-        app:fontFamily="casual"
-        android:textStyle="bold"
+        android:id="@+id/signUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="44dp"
         android:background="@drawable/otherbuttons"
         android:shadowColor="#A8A8A8"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:id="@+id/signUp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
         android:text="Sign Up"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:fontFamily="casual"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/subHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Teh"
-        tools:layout_editor_absoluteX="140dp"
-        tools:layout_editor_absoluteY="208dp" />
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:text="The ultimate dog adoption tool"
+        android:textSize="10pt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
 </android.support.constraint.ConstraintLayout>

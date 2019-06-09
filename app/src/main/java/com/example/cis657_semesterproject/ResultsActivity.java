@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -55,8 +56,6 @@ import java.util.Locale;
 import static com.example.cis657_semesterproject.SignupActivity.validated;
 
 public class ResultsActivity extends AppCompatActivity implements ResultsFragment.OnListFragmentInteractionListener{
-
-//android:autoLink="web"
 
     public static final int ACCOUNT_SELECTION = 1;
     public static final int WEBPAGE_SELECTION = 1;
@@ -395,13 +394,8 @@ public class ResultsActivity extends AppCompatActivity implements ResultsFragmen
                 //Picasso.with(ResultsActivity.this).load(url).fit().centerCrop().into(testImage);
                 Picasso.with(ResultsActivity.this).load(url).into(imageView);
 
-                TextView textView = new TextView(getApplicationContext());
-                textView.setClickable(true);
-                textView.setMovementMethod(LinkMovementMethod.getInstance());
-
-                breedName = breedName.replaceAll("-",", ");
-                String text = "<a href='https://www.google.com/search?q=" + this.breedName + "'> " + this.breedName + " </a>";
-                textView.setText(Html.fromHtml(text));
+                //textView.setText(Html.fromHtml(text));
+                //textView.setMovementMethod(LinkMovementMethod.getInstance());
 
                 ResultsItem breedItem = new ResultsItem(this.breedName, imageView);
                 breedEntries.add(breedItem);

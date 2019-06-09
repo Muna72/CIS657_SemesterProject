@@ -18,6 +18,7 @@ import static com.example.cis657_semesterproject.SignupActivity.validated;
 
 public class MainActivity extends AppCompatActivity {
 
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     public static final int SEARCH_SELECTION = 1;
     public static final int SIGNUP_SELECTION = 1;
     Button startNewSearch;
@@ -39,15 +40,27 @@ public class MainActivity extends AppCompatActivity {
         });
 
         signIn.setOnClickListener(v-> {
-            Intent intent = new Intent(MainActivity.this,SignupActivity.class);
-            intent.putExtra("isSignUp", false);
-            startActivityForResult(intent,SIGNUP_SELECTION);
+            if(user == null) {
+                Intent intent = new Intent(MainActivity.this, SignupActivity.class);
+                intent.putExtra("isSignUp", false);
+                startActivityForResult(intent, SIGNUP_SELECTION);
+            } else {
+                Intent intent = new Intent(MainActivity.this,
+                        AccountActivity.class);
+                startActivityForResult(intent, ACCOUNT_SELECTION);
+            }
         });
 
         signUp.setOnClickListener(v-> {
-            Intent intent = new Intent(MainActivity.this,SignupActivity.class);
-            intent.putExtra("isSignUp", true);
-            startActivityForResult(intent,SIGNUP_SELECTION);
+            if(user == null) {
+                Intent intent = new Intent(MainActivity.this, SignupActivity.class);
+                intent.putExtra("isSignUp", true);
+                startActivityForResult(intent, SIGNUP_SELECTION);
+            } else {
+                Intent intent = new Intent(MainActivity.this,
+                        AccountActivity.class);
+                startActivityForResult(intent, ACCOUNT_SELECTION);
+            }
         });
     }
 
@@ -59,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if(item.getItemId() == R.id.action_account) {
             if(user != null) {
