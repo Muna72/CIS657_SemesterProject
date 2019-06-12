@@ -28,8 +28,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.cis657_semesterproject.ResultsActivity.ACCOUNT_SELECTION;
-
 public class SearchActivity extends AppCompatActivity implements Serializable {
 
 
@@ -51,7 +49,6 @@ public class SearchActivity extends AppCompatActivity implements Serializable {
     public JSONObject item;
     public Map<String, Object> currentHistory;
     public static final int RESULTS_SELECTION = 1;
-    public static final int MAIN_SELECTION = 1;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -86,7 +83,7 @@ public class SearchActivity extends AppCompatActivity implements Serializable {
             intent.putExtra("spaceSelection", spaceSelection);
             intent.putExtra("timeSelection", timeSelection);
             intent.putExtra("hypoSelection", hypoSelection);
-            startActivityForResult(intent,RESULTS_SELECTION);
+            startActivity(intent);
         });
     }
 
@@ -171,21 +168,23 @@ System.out.println("USER SIGN IN ON SEARCH PAGE: " + user);
 
         if(item.getItemId() == R.id.action_account) {
             if(user != null) {
+                System.out.println("USER IS: " + user);
                 Intent intent = new Intent(SearchActivity.this,
                         AccountActivity.class);
-                startActivityForResult(intent, ACCOUNT_SELECTION);
+                startActivity(intent);
                 return true;
             } else {
                 Intent intent = new Intent(SearchActivity.this,
                         SignupActivity.class);
-                startActivityForResult(intent, ACCOUNT_SELECTION);
+                intent.putExtra("isSignUp", false);
+                startActivity(intent);
                 return true;
             }
         }
         if(item.getItemId() == R.id.action_home) {
             Intent intent = new Intent(SearchActivity.this,
                     MainActivity.class);
-            startActivityForResult(intent, MAIN_SELECTION);
+            startActivity(intent);
         }
         return false;
     }

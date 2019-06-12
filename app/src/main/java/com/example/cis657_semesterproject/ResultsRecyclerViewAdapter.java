@@ -1,5 +1,6 @@
 package com.example.cis657_semesterproject;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.util.Linkify;
@@ -16,11 +17,13 @@ public class ResultsRecyclerViewAdapter extends RecyclerView.Adapter<ResultsRecy
 
     private final List<ResultsActivity.ResultsItem> mValues;
     private final OnListFragmentInteractionListener mListener;
+    private Context mContext;
 
-    public ResultsRecyclerViewAdapter(List items, OnListFragmentInteractionListener listener) {
+    public ResultsRecyclerViewAdapter(List items, OnListFragmentInteractionListener listener, Context context) {
         System.out.println("ADAPTER CREATED");
         mValues = items;
         mListener = listener;
+        mContext = context;
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -34,16 +37,23 @@ public class ResultsRecyclerViewAdapter extends RecyclerView.Adapter<ResultsRecy
         String breedName = mValues.get(position).breedName;
         String formattedName = breedName.replaceAll(", ","-");
         formattedName = formattedName.replaceAll(" ", "-");
-        String text = "<a href=\"https://www.google.com/search?q=" + formattedName + "\"> " + breedName + " </a>";
-
+        String text = "<a href=\"http://www.google.com/search?q=" + formattedName + "\"> " + breedName + " </a>";
+        String url = "http://www.google.com/search?q=" + formattedName;
         holder.mP1.setClickable(true);
         holder.mP1.setText(Html.fromHtml(text));
         holder.mP1.setTextSize(15);
-        System.out.println("WEB ADDRESS: " + text);
         Linkify.addLinks(holder.mP1, Linkify.ALL);
         //TODO links not working
 
         holder.breedImage.setImageDrawable(mValues.get(position).breedImage.getDrawable());
+
+        holder.mP1.setOnClickListener(v -> {
+            System.out.println("CONTEXT: " + mContext);
+            if(mContext instanceof ResultsActivity){
+                System.out.println("MADE IT");
+                ((ResultsActivity)mContext).processGoogleSearch(url);
+            }
+        });
 
         holder.mView.setOnClickListener(v -> {
                 System.out.println("HI");

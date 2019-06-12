@@ -13,7 +13,6 @@
         android:layout_marginBottom="70dp"
         android:background="#0082FF"
         android:theme="@style/AppTheme"
-        app:layout_constraintBottom_toTopOf="@+id/historyHeader"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

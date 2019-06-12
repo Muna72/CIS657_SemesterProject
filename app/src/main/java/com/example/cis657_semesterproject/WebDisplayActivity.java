@@ -61,21 +61,23 @@ public class WebDisplayActivity extends AppCompatActivity {
 
         if(item.getItemId() == R.id.action_account) {
             if(user != null) {
+                System.out.println("USER IS: " + user);
                 Intent intent = new Intent(WebDisplayActivity.this,
                         AccountActivity.class);
-                startActivityForResult(intent, ACCOUNT_SELECTION);
+                startActivity(intent);
                 return true;
             } else {
                 Intent intent = new Intent(WebDisplayActivity.this,
                         SignupActivity.class);
-                startActivityForResult(intent, ACCOUNT_SELECTION);
+                intent.putExtra("isSignUp", false);
+                startActivity(intent);
                 return true;
             }
         }
         if(item.getItemId() == R.id.action_home) {
             Intent intent = new Intent(WebDisplayActivity.this,
                     MainActivity.class);
-            startActivityForResult(intent, MAIN_SELECTION);
+            startActivity(intent);
         }
         return false;
     }

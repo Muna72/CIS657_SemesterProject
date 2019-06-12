@@ -60,8 +60,6 @@ public class SignupActivity extends AppCompatActivity {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    public static final int ACCOUNT_SELECTION = 1;
-    public static final int MAIN_SELECTION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +71,7 @@ public class SignupActivity extends AppCompatActivity {
         confirmLabel = (TextView) findViewById(R.id.confirmLabel);
         warning.setVisibility(View.INVISIBLE);
         warning.setTextColor(Color.RED);
+        warning.setTextSize(15);
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         confirmPassword = (EditText) findViewById(R.id.confirmPassword);
@@ -156,7 +155,7 @@ public class SignupActivity extends AppCompatActivity {
                                                     });
 
                                                     Intent i = new Intent(SignupActivity.this, AccountActivity.class);
-                                                    startActivityForResult(i, ACCOUNT_SELECTION);
+                                                    startActivity(i);
                                                 }
                                             }
                                         }
@@ -189,7 +188,7 @@ public class SignupActivity extends AppCompatActivity {
                                                     warning.setVisibility(View.VISIBLE);
                                                 } else {
                                                     Intent i = new Intent(SignupActivity.this, AccountActivity.class);
-                                                    startActivityForResult(i, ACCOUNT_SELECTION);
+                                                    startActivity(i);
                                                 }
                                             }
                                         }
@@ -208,7 +207,7 @@ public class SignupActivity extends AppCompatActivity {
             confirmPassword.setVisibility(View.VISIBLE);
             confirmLabel.setVisibility(View.VISIBLE);
         } else {
-            header.setText("Enter Account Information");
+            header.setText("Account Credentials");
             accountAction.setText("Sign In");
             confirmPassword.setVisibility(View.INVISIBLE);
             confirmLabel.setVisibility(View.INVISIBLE);
@@ -256,19 +255,14 @@ public class SignupActivity extends AppCompatActivity {
             if(user != null) {
                 Intent intent = new Intent(SignupActivity.this,
                         AccountActivity.class);
-                startActivityForResult(intent, ACCOUNT_SELECTION);
-                return true;
-            } else {
-                Intent intent = new Intent(SignupActivity.this,
-                        SignupActivity.class);
-                startActivityForResult(intent, ACCOUNT_SELECTION);
+                startActivity(intent);
                 return true;
             }
         }
         if(item.getItemId() == R.id.action_home) {
             Intent intent = new Intent(SignupActivity.this,
                     MainActivity.class);
-            startActivityForResult(intent, MAIN_SELECTION);
+            startActivity(intent);
         }
         return false;
     }

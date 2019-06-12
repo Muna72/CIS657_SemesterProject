@@ -3,23 +3,17 @@ package com.example.cis657_semesterproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import static com.example.cis657_semesterproject.ResultsActivity.ACCOUNT_SELECTION;
-
 public class MainActivity extends AppCompatActivity {
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    public static final int SEARCH_SELECTION = 1;
-    public static final int SIGNUP_SELECTION = 1;
     Button startNewSearch;
     Button signIn;
     Button signUp;
@@ -35,18 +29,18 @@ public class MainActivity extends AppCompatActivity {
 
         startNewSearch.setOnClickListener(v-> {
             Intent intent = new Intent(MainActivity.this,SearchActivity.class);
-            startActivityForResult(intent,SEARCH_SELECTION);
+            startActivity(intent);
         });
 
         signIn.setOnClickListener(v-> {
             if(user == null) {
                 Intent intent = new Intent(MainActivity.this, SignupActivity.class);
                 intent.putExtra("isSignUp", false);
-                startActivityForResult(intent, SIGNUP_SELECTION);
+                startActivity(intent);
             } else {
                 Intent intent = new Intent(MainActivity.this,
                         AccountActivity.class);
-                startActivityForResult(intent, ACCOUNT_SELECTION);
+                startActivity(intent);
             }
         });
 
@@ -54,11 +48,11 @@ public class MainActivity extends AppCompatActivity {
             if(user == null) {
                 Intent intent = new Intent(MainActivity.this, SignupActivity.class);
                 intent.putExtra("isSignUp", true);
-                startActivityForResult(intent, SIGNUP_SELECTION);
+                startActivity(intent);
             } else {
                 Intent intent = new Intent(MainActivity.this,
                         AccountActivity.class);
-                startActivityForResult(intent, ACCOUNT_SELECTION);
+                startActivity(intent);
             }
         });
     }
@@ -77,13 +71,13 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("USER IS: " + user);
                 Intent intent = new Intent(MainActivity.this,
                         AccountActivity.class);
-                startActivityForResult(intent, ACCOUNT_SELECTION);
+                startActivity(intent);
                 return true;
             } else {
                 Intent intent = new Intent(MainActivity.this,
                         SignupActivity.class);
                 intent.putExtra("isSignUp", false);
-                startActivityForResult(intent, ACCOUNT_SELECTION);
+                startActivity(intent);
                 return true;
             }
         }

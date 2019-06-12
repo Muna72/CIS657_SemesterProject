@@ -69,14 +69,14 @@ public class ViewHistoryActivity extends AppCompatActivity {
             if(user != null) {
                 Intent intent = new Intent(ViewHistoryActivity.this,
                         AccountActivity.class);
-                startActivityForResult(intent, ACCOUNT_SELECTION);
+                startActivity(intent);
                 return true;
             }
         }
         if(item.getItemId() == R.id.action_home) {
             Intent intent = new Intent(ViewHistoryActivity.this,
                     MainActivity.class);
-            startActivityForResult(intent, MAIN_SELECTION);
+            startActivity(intent);
         }
         return false;
     }
@@ -145,7 +145,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    startActivityForResult(intent,RESULTS_SELECTION);
+                    startActivity(intent);
                  });
                 try {
                     temp.setText("Search Made On: " + currentSearch.get("date") + " > ");

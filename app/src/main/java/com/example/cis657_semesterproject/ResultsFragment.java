@@ -68,7 +68,7 @@ public class ResultsFragment extends Fragment {
             } else {
                 myRecycler.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            myAdapter = new ResultsRecyclerViewAdapter(ResultsActivity.breedEntries, mListener);
+            myAdapter = new ResultsRecyclerViewAdapter(ResultsActivity.breedEntries, mListener, context);
             myRecycler.setAdapter(myAdapter);
         }
         return view;

@@ -12,6 +12,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -19,20 +20,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
-import android.text.util.Linkify;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.flags.Flag;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -56,8 +49,6 @@ import java.util.Locale;
 public class ResultsActivity extends AppCompatActivity implements ResultsFragment.OnListFragmentInteractionListener{
 
     public static final int ACCOUNT_SELECTION = 1;
-    public static final int WEBPAGE_SELECTION = 1;
-    public static final int MAIN_SELECTION = 1;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     public static List<ResultsItem> breedEntries = new ArrayList<ResultsItem>();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -82,6 +73,10 @@ public class ResultsActivity extends AppCompatActivity implements ResultsFragmen
         setContentView(R.layout.activity_results);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
+        if(!breedEntries.isEmpty()) {
+            breedEntries.clear();
+        }
+
         Intent intentFromSearchPage = getIntent();
         sizeSelection = (intentFromSearchPage.getStringExtra("sizeSelection"));
         priceSelection = (intentFromSearchPage.getStringExtra("priceSelection"));
@@ -98,8 +93,6 @@ public class ResultsActivity extends AppCompatActivity implements ResultsFragmen
 
             if (ContextCompat.checkSelfPermission(getApplicationContext(),
                     android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED) {
-                System.out.println("MADE IT INTO FLAG INNER");
-
 
                 ActivityCompat.requestPermissions(ResultsActivity.this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
@@ -120,7 +113,7 @@ public class ResultsActivity extends AppCompatActivity implements ResultsFragmen
             Intent intent = new Intent(ResultsActivity.this, WebDisplayActivity.class);
             intent.putExtra("state", state);
             intent.putExtra("zip", zip);
-            startActivityForResult(intent,WEBPAGE_SELECTION);
+            startActivity(intent);
         });
     }
 
@@ -155,8 +148,13 @@ public class ResultsActivity extends AppCompatActivity implements ResultsFragmen
 
     public void gotCoordinates(){
 
-        this.latitude = ((MyLocationListener) locationListener).getLatitude();
-        this.longitude = ((MyLocationListener) locationListener).getLongitude();
+        latitude = ((MyLocationListener) locationListener).getLatitude();
+        longitude = ((MyLocationListener) locationListener).getLongitude();
+
+        if(latitude == null || longitude == null) {
+            latitude = 42.964273;
+            longitude = -85.680237;
+        }
 
         Geocoder geoCoder = new Geocoder(getBaseContext(), Locale.getDefault());
         try {
@@ -237,30 +235,29 @@ public class ResultsActivity extends AppCompatActivity implements ResultsFragmen
 
         if(item.getItemId() == R.id.action_account) {
             if(user != null) {
+                System.out.println("USER IS: " + user);
                 Intent intent = new Intent(ResultsActivity.this,
                         AccountActivity.class);
-                startActivityForResult(intent, ACCOUNT_SELECTION);
+                startActivity(intent);
                 return true;
             } else {
                 Intent intent = new Intent(ResultsActivity.this,
                         SignupActivity.class);
-                startActivityForResult(intent, ACCOUNT_SELECTION);
+                intent.putExtra("isSignUp", false);
+                startActivity(intent);
                 return true;
             }
         }
         if(item.getItemId() == R.id.action_home) {
             Intent intent = new Intent(ResultsActivity.this,
                     MainActivity.class);
-            startActivityForResult(intent, MAIN_SELECTION);
+            startActivity(intent);
         }
         return false;
     }
 
     public void onListFragmentInteraction(ResultsItem item) { //TODO what happens if a dog image/name is touched
-        Intent intent = new Intent();
-        //intent.putExtra("item", breedEntries);
-        //setResult(MainActivity.HISTORY_RESULT,intent);
-        finish();
+
     }
 
 
@@ -319,6 +316,7 @@ public class ResultsActivity extends AppCompatActivity implements ResultsFragmen
                         e.printStackTrace();
                     }
                 }
+                System.out.println("MATCHING BREED NAMES: " + matchingBreedNames);
                 displayBreedData(matchingBreedNames);
             }
 
@@ -427,8 +425,10 @@ public class ResultsActivity extends AppCompatActivity implements ResultsFragmen
 
         @Override
         public void onLocationChanged(Location loc) {
+            System.out.println("HIT");
             lng = loc.getLongitude();
             lat = loc.getLatitude();
+            System.out.println("LAT AND LONG: " + loc.getLatitude() + " " + loc.getLongitude());
         }
 
         public Double getLatitude() {
@@ -453,6 +453,11 @@ public class ResultsActivity extends AppCompatActivity implements ResultsFragmen
         public void onProviderDisabled(String provider) {
 
         }
+    }
+
+    public void processGoogleSearch(String text) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(text));
+        startActivity(browserIntent);
     }
 
 }
