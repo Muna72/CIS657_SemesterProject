@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:448164575358:android:0c26f96904519509",
         "android_client_info": {
-          "package_name": "com.example.cis657_semesterproject"
+          "package_name": "com.mobileapp.cis657_semesterproject"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "448164575358-tskbhddhkarsu0s1t67b4gg0p5068p31.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.cis657_semesterproject",
+            "package_name": "com.mobileapp.cis657_semesterproject",
             "certificate_hash": "3c3ce668387635b3b8cd44ff18780b13b1ef9d82"
           }
         },
